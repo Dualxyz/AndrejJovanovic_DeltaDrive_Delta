@@ -18,7 +18,6 @@ namespace DeltaDriveBE.DatabaseConfiguration
             builder.Property(x => x.Longitude).IsRequired();
             builder.Property(x => x.StartPrice).IsRequired();
             builder.Property(x => x.PricePerKm).IsRequired();
-            builder.Property(x => x.Rating);
         }
     }
 }

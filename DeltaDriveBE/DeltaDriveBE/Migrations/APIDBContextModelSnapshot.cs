@@ -49,15 +49,10 @@ namespace DeltaDriveBE.Migrations
                         .IsRequired()
                         .HasColumnType("float");
 
-                    b.Property<double?>("PricePerKm")
-                        .IsRequired()
+                    b.Property<double>("PricePerKm")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("StartPrice")
-                        .IsRequired()
+                    b.Property<double>("StartPrice")
                         .HasColumnType("float");
 
                     b.HasKey("Id");

@@ -45,8 +45,7 @@ namespace DeltaDriveBE.Repository
             Latitude,
             Longitude,
             StartPrice,
-            PricePerKm,
-            Rating
+            PricePerKm
         FROM dbo.Drivers
         ORDER BY @targetLocation.STDistance(geography::Point(Latitude, Longitude, 4326))";
             var result = _dbContext.Drivers.FromSqlRaw(query).ToList();
