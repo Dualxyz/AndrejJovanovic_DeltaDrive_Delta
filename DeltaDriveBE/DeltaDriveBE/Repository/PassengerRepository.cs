@@ -2,9 +2,12 @@
 using DeltaDriveBE.Infrastructure;
 using DeltaDriveBE.Interfaces.Repository;
 using DeltaDriveBE.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeltaDriveBE.Repository
 {
+
     public class PassengerRepository : IPassengerRepository
     {
         private readonly APIDBContext _dbContext;
@@ -24,6 +27,29 @@ namespace DeltaDriveBE.Repository
         public Passenger? FindPassenger(LoginPassengerRequestDTO passenger)
         {
             return _dbContext.Passangers.FirstOrDefault(u => u.Email == passenger.Email);
+        }
+
+
+        public List<Driver>? GetDrivers(int amount, float latitude, float longitude)
+        {
+            //throw new NotImplementedException();
+            string query = $@"
+        DECLARE @targetLocation geography;
+        SET @targetLocation = geography::Point({latitude}, {longitude}, 4326);
+        
+        SELECT TOP {amount}
+            Id,
+            Brand,
+            FirstName,
+            LastName,
+            Latitude,
+            Longitude,
+            StartPrice,
+            PricePerKm
+        FROM dbo.Drivers
+        ORDER BY @targetLocation.STDistance(geography::Point(Latitude, Longitude, 4326))";
+            var result = _dbContext.Drivers.FromSqlRaw(query).ToList();
+            return result;
         }
     }
 }

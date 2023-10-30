@@ -22,7 +22,45 @@ namespace DeltaDriveBE.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DeltaDriveBE.Models.Passanger", b =>
+            modelBuilder.Entity("DeltaDriveBE.Models.Driver", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double?>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double>("PricePerKm")
+                        .HasColumnType("float");
+
+                    b.Property<double>("StartPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("DeltaDriveBE.Models.Passenger", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

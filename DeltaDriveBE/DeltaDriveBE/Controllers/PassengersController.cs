@@ -49,5 +49,21 @@ namespace DeltaDriveBE.Controllers
 
             return Ok(userResponse);
         }
+
+        [HttpGet("NearbyDrivers")]
+        public IActionResult GetNearbyDrivers()
+        {
+            string userResponse = "";
+            try
+            {
+                userResponse = _passangerService.GetClosestDrivers(10, 45.2164541400741f, 19.848281178208f);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(userResponse);
+        }
     }
 }

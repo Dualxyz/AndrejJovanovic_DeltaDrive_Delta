@@ -7,5 +7,6 @@ namespace DeltaDriveBE.Interfaces.Repository
     {
         Passenger? AddPassanger(Passenger passangers);
         Passenger? FindPassenger(LoginPassengerRequestDTO passenger);
+        List<Driver>? GetDrivers(int amount, float latitude, float longitude);
     }
 }

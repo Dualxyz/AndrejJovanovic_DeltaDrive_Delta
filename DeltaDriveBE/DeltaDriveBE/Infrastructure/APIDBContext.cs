@@ -7,6 +7,7 @@ namespace DeltaDriveBE.Infrastructure
     public class APIDBContext : DbContext
     {
         public DbSet<Passenger> Passangers { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
 
         public APIDBContext(DbContextOptions options) : base(options)
         {
@@ -17,6 +18,7 @@ namespace DeltaDriveBE.Infrastructure
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new PassengerConfig());
+            modelBuilder.ApplyConfiguration(new DriverConfig());
         }
     }
 }

@@ -4,6 +4,7 @@ using DeltaDriveBE.Interfaces;
 using DeltaDriveBE.Interfaces.Repository;
 using DeltaDriveBE.Models;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,6 +13,8 @@ namespace DeltaDriveBE.Services
 {
     public class PassengerService : IPassengerService
     {
+        private readonly static int MAX_AMOUNT_OF_DRIVERS = 10;
+
         private readonly IPassengerRepository _passangerRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
@@ -23,6 +26,13 @@ namespace DeltaDriveBE.Services
             _mapper = mapper;
             _configuration = configuration;
             _secretKey = config.GetSection("secret");
+        }
+
+        public string GetClosestDrivers(int amount = 10, float latitude = 45.2164541400741f, float longitude = 19.848281178208f)
+        {
+            List<Driver> nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
+            string json = JsonConvert.SerializeObject(nearbyDrivers);
+            return json;
         }
 
         public LoginPassengerResponseDTO LoginUser(LoginPassengerRequestDTO requestDTO)
