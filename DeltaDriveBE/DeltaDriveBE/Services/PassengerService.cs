@@ -28,9 +28,9 @@ namespace DeltaDriveBE.Services
             _secretKey = config.GetSection("secret");
         }
 
-        public string GetClosestDrivers(int amount = 10, float latitude = 45.2164541400741f, float longitude = 19.848281178208f)
+        public string GetClosestDrivers(int amount, float latitude, float longitude)
         {
-            List<Driver> nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
+            List<Driver>? nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
             string json = JsonConvert.SerializeObject(nearbyDrivers);
             return json;
         }

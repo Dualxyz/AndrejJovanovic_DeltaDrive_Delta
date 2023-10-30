@@ -1,4 +1,5 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.PassengerDTO;
 using DeltaDriveBE.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace DeltaDriveBE.Controllers
     [ApiController]
     public class PassengersController : ControllerBase
     {
+        private readonly static int AMOUNT_OF_NEARBY_DRIVERS = 10;
         private readonly IPassengerService _passangerService;
 
         public PassengersController(IPassengerService passangerService)
@@ -50,20 +52,20 @@ namespace DeltaDriveBE.Controllers
             return Ok(userResponse);
         }
 
-        [HttpGet("NearbyDrivers")]
-        public IActionResult GetNearbyDrivers()
+        [HttpPost("NearbyDrivers")]
+        public IActionResult GetNearbyDrivers([FromBody] GetNearbyDriversRequestDTO requestDTO)
         {
             string userResponse = "";
             try
             {
-                userResponse = _passangerService.GetClosestDrivers(10, 45.2164541400741f, 19.848281178208f);
+                userResponse = _passangerService.GetClosestDrivers(AMOUNT_OF_NEARBY_DRIVERS, requestDTO.Latitude, requestDTO.Longitude);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Ok(userResponse);
+            return Content(userResponse, "application/json");
         }
     }
 }
