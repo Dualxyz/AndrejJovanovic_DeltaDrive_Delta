@@ -1,6 +1,6 @@
 ﻿namespace DeltaDriveBE.DTO.AuthDTO
 {
-    public class RegisterPassangerRequestDTO
+    public class RegisterPassengerRequestDTO
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

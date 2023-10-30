@@ -7,19 +7,19 @@ namespace DeltaDriveBE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PassangersController : ControllerBase
+    public class PassengersController : ControllerBase
     {
-        private readonly IPassangerService _passangerService;
+        private readonly IPassengerService _passangerService;
 
-        public PassangersController(IPassangerService passangerService)
+        public PassengersController(IPassengerService passangerService)
         {
             _passangerService = passangerService;
         }
 
         [HttpPost("login")]
-        public IActionResult LoginUser([FromBody] LoginPassangerRequestDTO req)
+        public IActionResult LoginUser([FromBody] LoginPassengerRequestDTO req)
         {
-            LoginPassangerResponseDTO resp;
+            LoginPassengerResponseDTO resp;
 
             try
             {
@@ -34,9 +34,9 @@ namespace DeltaDriveBE.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult RegisterPassanger([FromBody] RegisterPassangerRequestDTO user)
+        public IActionResult RegisterPassanger([FromBody] RegisterPassengerRequestDTO user)
         {
-            RegisterPassangerResponseDTO userResponse;
+            RegisterPassengerResponseDTO userResponse;
 
             try
             {

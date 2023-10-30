@@ -8,10 +8,10 @@ namespace DeltaDriveBE.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<RegisterPassangerRequestDTO, Passanger>().ReverseMap();
-            CreateMap<Passanger, RegisterPassangerResponseDTO>().ReverseMap();
-            CreateMap<Passanger, LoginPassangerRequestDTO>().ReverseMap();
-            CreateMap<Passanger, LoginPassangerResponseDTO>().ReverseMap();
+            CreateMap<RegisterPassengerRequestDTO, Passenger>().ReverseMap();
+            CreateMap<Passenger, RegisterPassengerResponseDTO>().ReverseMap();
+            CreateMap<Passenger, LoginPassengerRequestDTO>().ReverseMap();
+            CreateMap<Passenger, LoginPassengerResponseDTO>().ReverseMap();
         }
     }
 }

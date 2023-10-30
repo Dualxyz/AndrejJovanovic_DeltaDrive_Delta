@@ -1,6 +1,6 @@
 ﻿namespace DeltaDriveBE.DTO.AuthDTO
 {
-    public class LoginPassangerRequestDTO
+    public class LoginPassengerRequestDTO
     {
         public string? Email { get; set; }
         public string? Password { get; set; }

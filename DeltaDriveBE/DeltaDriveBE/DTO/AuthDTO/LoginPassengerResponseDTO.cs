@@ -1,6 +1,6 @@
 ﻿namespace DeltaDriveBE.DTO.AuthDTO
 {
-    public class LoginPassangerResponseDTO
+    public class LoginPassengerResponseDTO
     {
         public Guid Id { get; set; }
         public string Token { get; set; } = string.Empty;

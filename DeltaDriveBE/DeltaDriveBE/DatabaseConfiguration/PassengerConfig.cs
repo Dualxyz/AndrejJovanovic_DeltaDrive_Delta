@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DeltaDriveBE.DatabaseConfiguration
 {
-    public class PassangerConfig : IEntityTypeConfiguration<Passanger>
+    public class PassengerConfig : IEntityTypeConfiguration<Passenger>
     {
-        public void Configure(EntityTypeBuilder<Passanger> builder)
+        public void Configure(EntityTypeBuilder<Passenger> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();

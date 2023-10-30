@@ -1,6 +1,6 @@
 ﻿namespace DeltaDriveBE.Models
 {
-    public class Passanger
+    public class Passenger
     {
         //Core Fields
         public Guid Id { get; set; }
