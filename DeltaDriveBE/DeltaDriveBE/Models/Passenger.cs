@@ -11,5 +11,6 @@
         public string Birthdate { get; set; } = string.Empty;
 
         //Additional fields?
+        public List<Ride> Rides { get; set; } = default!;
     }
 }

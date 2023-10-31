@@ -10,5 +10,8 @@
         public double? Longitude { get; set; }
         public double StartPrice { get; set; }
         public double PricePerKm { get; set; }
+
+        //Additional fields
+        public List<Ride> Rides { get; set; } = default!;
     }
 }

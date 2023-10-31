@@ -26,7 +26,7 @@ namespace DeltaDriveBE.Repository
 
         public Passenger? FindPassenger(LoginPassengerRequestDTO passenger)
         {
-            return _dbContext.Passangers.FirstOrDefault(u => u.Email == passenger.Email);
+            return _dbContext.Passangers.Include(x => x.Rides).FirstOrDefault(u => u.Email == passenger.Email);
         }
 
 
