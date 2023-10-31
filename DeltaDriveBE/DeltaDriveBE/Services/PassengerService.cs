@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.Exceptions;
 using DeltaDriveBE.Interfaces;
 using DeltaDriveBE.Interfaces.Repository;
 using DeltaDriveBE.Models;
+using EntityFramework.Exceptions.Common;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,8 +15,6 @@ namespace DeltaDriveBE.Services
 {
     public class PassengerService : IPassengerService
     {
-        private readonly static int MAX_AMOUNT_OF_DRIVERS = 10;
-
         private readonly IPassengerRepository _passangerRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
@@ -40,12 +40,12 @@ namespace DeltaDriveBE.Services
             Passenger? user = _passangerRepository.FindPassenger(requestDTO);
             if (user == null)
             {
-                throw new Exception("Incorrect login credentials");
+                throw new InvalidCredentialsException("Incorrect login credentials");
             }
 
             if (!BCrypt.Net.BCrypt.Verify(requestDTO.Password, user.Password))
             {
-                throw new Exception("Incorrect login credentials");
+                throw new InvalidCredentialsException("Incorrect login credentials");
             }
 
             List<Claim> claims = new List<Claim>();
@@ -83,19 +83,31 @@ namespace DeltaDriveBE.Services
 
         public RegisterPassengerResponseDTO RegisterUser(RegisterPassengerRequestDTO requestDTO)
         {
-            Passenger passanger = _mapper.Map<Passenger>(requestDTO);
+            Passenger passenger = _mapper.Map<Passenger>(requestDTO);
             //hash the pw with bcrypt
-            passanger.Password = BCrypt.Net.BCrypt.HashPassword(passanger.Password, BCrypt.Net.BCrypt.GenerateSalt());
+            passenger.Password = BCrypt.Net.BCrypt.HashPassword(passenger.Password, BCrypt.Net.BCrypt.GenerateSalt());
+
+            if (string.IsNullOrWhiteSpace(passenger.FirstName) || string.IsNullOrWhiteSpace(passenger.LastName) ||
+                string.IsNullOrWhiteSpace(passenger.Email) || string.IsNullOrWhiteSpace(passenger.Password) ||
+                string.IsNullOrWhiteSpace(passenger.Birthdate))
+            {
+                throw new InvalidFieldsException("One of more fields are missing");
+            }
 
             try
             {
-                _passangerRepository.AddPassanger(passanger);
-            } catch(Exception ex)
+                _passangerRepository.AddPassanger(passenger);
+            }
+            catch (UniqueConstraintException)
             {
-                throw new Exception(ex.InnerException?.Message);
+                throw new InvalidCredentialsException("User with specified username and/or email already exists!");
+            }
+            catch (Exception)
+            {
+                throw; //new Exception(ex.InnerException?.Message);
             }
 
-            return _mapper.Map<RegisterPassengerResponseDTO>(passanger);
+            return _mapper.Map<RegisterPassengerResponseDTO>(passenger);
         }
     }
 }
