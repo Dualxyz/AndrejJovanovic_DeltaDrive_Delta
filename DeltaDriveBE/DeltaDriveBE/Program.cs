@@ -85,7 +85,8 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = "http://localhost:44319",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["secret"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["secret"])),
+        //ClockSkew = TimeSpan.Zero //By default the validity of JWT is 5 minutes, ClockSkew = TimeSpan.Zero removes that
     };
 });
 

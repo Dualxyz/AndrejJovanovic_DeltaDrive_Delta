@@ -68,7 +68,7 @@ namespace DeltaDriveBE.Services
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: "http://localhost:44319",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: signingCredentials
             );
 

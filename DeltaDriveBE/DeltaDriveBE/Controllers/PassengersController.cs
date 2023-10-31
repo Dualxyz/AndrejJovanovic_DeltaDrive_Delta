@@ -1,6 +1,7 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
 using DeltaDriveBE.DTO.PassengerDTO;
 using DeltaDriveBE.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,9 +54,10 @@ namespace DeltaDriveBE.Controllers
         }
 
         [HttpPost("NearbyDrivers")]
+        [Authorize]
         public IActionResult GetNearbyDrivers([FromBody] GetNearbyDriversRequestDTO requestDTO)
         {
-            string userResponse = "";
+            string userResponse;
             try
             {
                 userResponse = _passangerService.GetClosestDrivers(AMOUNT_OF_NEARBY_DRIVERS, requestDTO.Latitude, requestDTO.Longitude);
