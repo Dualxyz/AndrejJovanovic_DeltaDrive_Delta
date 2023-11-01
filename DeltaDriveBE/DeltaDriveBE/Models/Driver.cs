@@ -12,6 +12,7 @@
         public double PricePerKm { get; set; }
 
         //Additional fields
-        public List<Ride> Rides { get; set; } = default!;
+        public List<Ride> RideHistory { get; set; } = default!;
+        public bool IsBooked => RideHistory.Any(x => x.RideStatus != Enums.RideStatus.Completed);
     }
 }

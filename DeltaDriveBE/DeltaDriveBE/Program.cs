@@ -6,7 +6,9 @@ using DeltaDriveBE.Mapper;
 using DeltaDriveBE.Models;
 using DeltaDriveBE.Repository;
 using DeltaDriveBE.Services;
+using DeltaDriveBE.Validators;
 using EntityFramework.Exceptions.SqlServer;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -42,6 +44,9 @@ builder.Services.AddScoped<IPassengerRepository, PassengerRepository>();
 
 builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IRideRepository, RideRepository>();
+
+builder.Services.AddScoped<IDriverRepository, DriverRepository>();
+builder.Services.AddScoped<IValidator<Ride>, RideValidator>();
 #endregion
 
 #region SwaggerGen for JWT
@@ -106,7 +111,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "cors", builder =>
     {
         builder
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins("http://localhost:3000", "http://localhost:3001")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();

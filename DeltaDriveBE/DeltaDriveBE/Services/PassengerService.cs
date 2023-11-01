@@ -91,7 +91,7 @@ namespace DeltaDriveBE.Services
 
             if (string.IsNullOrWhiteSpace(passenger.FirstName) || string.IsNullOrWhiteSpace(passenger.LastName) ||
                 string.IsNullOrWhiteSpace(passenger.Email) || string.IsNullOrWhiteSpace(passenger.Password) ||
-                string.IsNullOrWhiteSpace(passenger.Birthdate))
+                string.IsNullOrWhiteSpace(passenger.Birthday.ToString()))
             {
                 throw new InvalidFieldsException("One of more fields are missing");
             }

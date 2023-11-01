@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.RideDTO;
 using DeltaDriveBE.Models;
 
 namespace DeltaDriveBE.Mapper
@@ -12,6 +13,9 @@ namespace DeltaDriveBE.Mapper
             CreateMap<Passenger, RegisterPassengerResponseDTO>().ReverseMap();
             CreateMap<Passenger, LoginPassengerRequestDTO>().ReverseMap();
             CreateMap<Passenger, LoginPassengerResponseDTO>().ReverseMap();
+
+            CreateMap<BookRideRequestDTO, Ride>();
+            CreateMap<Ride, BookRideResponseDTO>();
         }
     }
 }

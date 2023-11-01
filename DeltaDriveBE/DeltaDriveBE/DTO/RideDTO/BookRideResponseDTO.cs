@@ -1,6 +1,19 @@
-﻿namespace DeltaDriveBE.DTO.RideDTO
+﻿using DeltaDriveBE.Enums;
+
+namespace DeltaDriveBE.DTO.RideDTO
 {
     public class BookRideResponseDTO
     {
+        public Guid Id { get; set; }
+        public Guid DriverId { get; set; }
+        public Guid PassengerId { get; set; }
+        public RideStatus RideStatus { get; set; } = RideStatus.Pending;
+        public double StartLatitude { get; set; }
+        public double StartLongitude { get; set; }
+        public double DestinationLatitude { get; set; }
+        public double DestinationLongitude { get; set; }
+        public double TotalPrice { get; set; }
+        public int? Rating { get; set; }
+        public string? Comment { get; set; }
     }
 }

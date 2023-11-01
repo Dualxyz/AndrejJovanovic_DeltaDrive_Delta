@@ -18,7 +18,7 @@ namespace DeltaDriveBE.DatabaseConfiguration
             builder.HasIndex(x => x.Email).IsUnique();
 
             builder.Property(x => x.Password).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Birthdate).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Birthday).IsRequired().HasMaxLength(100);
         }
     }
 }

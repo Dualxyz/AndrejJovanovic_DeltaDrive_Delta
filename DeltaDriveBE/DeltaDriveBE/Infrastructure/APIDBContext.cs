@@ -8,6 +8,7 @@ namespace DeltaDriveBE.Infrastructure
     {
         public DbSet<Passenger> Passangers { get; set; }
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Ride> Rides { get; set; }
 
         public APIDBContext(DbContextOptions options) : base(options)
         {

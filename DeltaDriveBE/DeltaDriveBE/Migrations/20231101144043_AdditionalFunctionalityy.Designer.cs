@@ -4,6 +4,7 @@ using DeltaDriveBE.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeltaDriveBE.Migrations
 {
     [DbContext(typeof(APIDBContext))]
-    partial class APIDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231101144043_AdditionalFunctionalityy")]
+    partial class AdditionalFunctionalityy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace DeltaDriveBE.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Drivers", (string)null);
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("DeltaDriveBE.Models.Passenger", b =>
@@ -95,7 +98,7 @@ namespace DeltaDriveBE.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Passangers", (string)null);
+                    b.ToTable("Passangers");
                 });
 
             modelBuilder.Entity("DeltaDriveBE.Models.Ride", b =>
@@ -140,7 +143,7 @@ namespace DeltaDriveBE.Migrations
 
                     b.HasIndex("PassengerId");
 
-                    b.ToTable("Rides", (string)null);
+                    b.ToTable("Rides");
                 });
 
             modelBuilder.Entity("DeltaDriveBE.Models.Ride", b =>
