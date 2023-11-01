@@ -1,4 +1,6 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.RideDTO;
+using DeltaDriveBE.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,25 +11,32 @@ namespace DeltaDriveBE.Controllers
     [ApiController]
     public class RidesController : ControllerBase
     {
-        //[HttpPost]
-        //[Authorize]
+        private readonly IRideService _rideService;
+
+        public RidesController(IRideService rideService)
+        {
+            _rideService = rideService;
+        }
+
+        [HttpPost]
+        [Authorize]
         //U DTO -> ID Vozaca i Passenger ID
-        //public IActionResult BookRide([FromBody] LoginPassengerRequestDTO req)
-        //{
-        //    //long userId = long.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
-        //    LoginPassengerResponseDTO resp;
+        public IActionResult BookRide([FromBody] BookRideRequestDTO req)
+        {
+            Guid passengerId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            BookRideResponseDTO resp;
 
-        //    try
-        //    {
-        //        resp = _passangerService.LoginUser(req);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
+            try
+            {
+                resp = _rideService.BookRide(req, passengerId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-        //    return Ok(resp);
-        //}
+            return Ok(resp);
+        }
 
         //public IActionResult RateRide([FromBody] LoginPassengerRequestDTO req)
         //{

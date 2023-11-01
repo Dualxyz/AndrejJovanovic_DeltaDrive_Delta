@@ -12,5 +12,7 @@ namespace DeltaDriveBE.Models
 
         public VehicleStatus VehicleStatus { get; set; } = Enums.VehicleStatus.PENDING;
 
+        public int Ocena {  get; set; }
+
     }
 }

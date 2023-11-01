@@ -39,6 +39,9 @@ builder.Services.AddSingleton(mapper);
 # region register service and repositories
 builder.Services.AddScoped<IPassengerService, PassengerService>();
 builder.Services.AddScoped<IPassengerRepository, PassengerRepository>();
+
+builder.Services.AddScoped<IRideService, RideService>();
+builder.Services.AddScoped<IRideRepository, RideRepository>();
 #endregion
 
 #region SwaggerGen for JWT

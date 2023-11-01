@@ -48,6 +48,8 @@ namespace DeltaDriveBE.Services
                 throw new InvalidCredentialsException("Incorrect login credentials");
             }
 
+            
+
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("Id", user.Id.ToString()));
             //claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
@@ -68,7 +70,7 @@ namespace DeltaDriveBE.Services
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: "http://localhost:44319",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: signingCredentials
             );
 

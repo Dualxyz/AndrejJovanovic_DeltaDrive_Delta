@@ -2,8 +2,8 @@
 {
     public enum VehicleStatus
     {
-        BOOKED,
-        AVAILABLE,
+        PENDING,
+        ACCEPTED,
         REJECTED, //Optional
     }
 }
