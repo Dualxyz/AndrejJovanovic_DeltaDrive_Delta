@@ -12,7 +12,6 @@ import Home from "./pages/Home/Home";
 function App() {
   return (
       <>
-          WHAT
         <Header />
         {/*<ToastContainer style={{ width: "400px" }} />*/}
         <Container className="mt-3">
