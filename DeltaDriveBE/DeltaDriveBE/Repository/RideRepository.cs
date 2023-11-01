@@ -49,5 +49,16 @@ namespace DeltaDriveBE.Repository
 
             return ride;
         }
+
+        public List<Ride>? GetDriverRating(Guid id)
+        {
+            string query = $@"
+                SELECT *
+                FROM dbo.Rides
+                WHERE DriverId = '{id}';
+            ";
+            List<Ride>? result = _dbContext.Rides.FromSqlRaw(query).ToList();
+            return result;
+        }
     }
 }

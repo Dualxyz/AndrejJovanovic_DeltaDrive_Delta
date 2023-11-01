@@ -16,16 +16,18 @@ namespace DeltaDriveBE.Services
     public class PassengerService : IPassengerService
     {
         private readonly IPassengerRepository _passangerRepository;
+        private readonly IRideRepository _rideRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IConfigurationSection _secretKey;
 
-        public PassengerService(IConfiguration config,IPassengerRepository passangerRepository, IMapper mapper, IConfiguration configuration)
+        public PassengerService(IConfiguration config,IPassengerRepository passangerRepository, IMapper mapper, IConfiguration configuration, IRideRepository rideRepository)
         {
             _passangerRepository = passangerRepository;
             _mapper = mapper;
             _configuration = configuration;
             _secretKey = config.GetSection("secret");
+            _rideRepository = rideRepository;
         }
 
         public string GetClosestDrivers(int amount, float latitude, float longitude)
@@ -33,6 +35,20 @@ namespace DeltaDriveBE.Services
             List<Driver>? nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
             string json = JsonConvert.SerializeObject(nearbyDrivers);
             return json;
+        }
+
+        public string GetDriverRating(Guid id)
+        {
+            List<Ride>? driverRatings = _rideRepository.GetDriverRating(id);
+            if(driverRatings != null && driverRatings.Count > 0)
+            {
+                double? averageRating = (double?)driverRatings.Sum(rating => rating.Rating) / driverRatings.Count;
+                string json = JsonConvert.SerializeObject(new {AverageRating = averageRating});
+                return json;
+            } else
+            {
+                return string.Empty;
+            } 
         }
 
         public LoginPassengerResponseDTO LoginUser(LoginPassengerRequestDTO requestDTO)

@@ -7,5 +7,6 @@ namespace DeltaDriveBE.Interfaces
         LoginPassengerResponseDTO LoginUser(LoginPassengerRequestDTO requestDTO);
         RegisterPassengerResponseDTO RegisterUser(RegisterPassengerRequestDTO requestDTO);
         string GetClosestDrivers(int amount, float latitude, float longitude);
+        string GetDriverRating(Guid id);
     }
 }

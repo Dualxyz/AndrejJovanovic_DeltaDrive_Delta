@@ -69,5 +69,20 @@ namespace DeltaDriveBE.Controllers
 
             return Content(userResponse, "application/json");
         }
+
+        [HttpGet("GetDriverRating/{id}")]
+        public IActionResult GetDriverRating(Guid id)
+        {
+            string userResponse;
+            try
+            {
+                userResponse = _passangerService.GetDriverRating(id);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Content(userResponse, "application/json");
+        }
     }
 }
