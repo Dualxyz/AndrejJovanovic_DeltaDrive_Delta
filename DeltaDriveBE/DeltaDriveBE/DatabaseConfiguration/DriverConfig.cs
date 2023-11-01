@@ -19,7 +19,7 @@ namespace DeltaDriveBE.DatabaseConfiguration
             builder.Property(x => x.StartPrice).IsRequired();
             builder.Property(x => x.PricePerKm).IsRequired();
             //builder.HasMany(x => x.Ratings).WithOne(x => x.Driver).HasForeignKey(x => x.DriverId).HasForeignKey(x=>x.PassengerId);
-            builder.Ignore(x => x.IsBooked);
+            //builder.Ignore(x => x.IsBooked);
         }
     }
 }

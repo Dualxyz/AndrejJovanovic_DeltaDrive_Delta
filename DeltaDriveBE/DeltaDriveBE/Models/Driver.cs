@@ -13,6 +13,6 @@
 
         //Additional fields
         public List<Ride> RideHistory { get; set; } = default!;
-        public bool IsBooked => RideHistory.Any(x => x.RideStatus != Enums.RideStatus.Completed);
+        //public bool IsBooked => RideHistory.Any(x => x.RideStatus != Enums.RideStatus.Completed);
     }
 }

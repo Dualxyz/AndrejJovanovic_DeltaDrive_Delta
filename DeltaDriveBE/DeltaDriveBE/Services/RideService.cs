@@ -27,6 +27,36 @@ namespace DeltaDriveBE.Services
             _mapper = mapper;
         }
 
+        private static double CalculateDistance(Ride ride)
+        {
+            const double earthRadius = 6371; // Earth's radius in kilometers
+
+            // Convert latitude and longitude from degrees to radians
+            double startLatRad = ToRadians(ride.StartLatitude);
+            double startLonRad = ToRadians(ride.StartLongitude);
+            double destLatRad = ToRadians(ride.DestinationLatitude);
+            double destLonRad = ToRadians(ride.DestinationLongitude);
+
+            // Calculate the differences between latitudes and longitudes
+            double latDiff = destLatRad - startLatRad;
+            double lonDiff = destLonRad - startLonRad;
+
+            // Calculate the Haversine formula
+            double a = Math.Sin(latDiff / 2) * Math.Sin(latDiff / 2) +
+                       Math.Cos(startLatRad) * Math.Cos(destLatRad) *
+                       Math.Sin(lonDiff / 2) * Math.Sin(lonDiff / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            // Calculate the distance
+            double distance = earthRadius * c;
+
+            return distance;
+        }
+        private static double ToRadians(double degrees)
+        {
+            return degrees * (Math.PI / 180);
+        }
+
         public BookRideResponseDTO BookRide(BookRideRequestDTO requestDto, Guid id)
         {
 
@@ -49,7 +79,7 @@ namespace DeltaDriveBE.Services
             }
 
             // TODO - Calculate distance in km between start and destination
-            double distanceInKm = 0;
+            double distanceInKm = CalculateDistance(ride);
 
             // Calculate total price based on distance and prices of driver
             ride.TotalPrice = driver.StartPrice + driver.PricePerKm * distanceInKm;
