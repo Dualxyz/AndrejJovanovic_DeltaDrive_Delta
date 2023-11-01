@@ -5,6 +5,6 @@ namespace DeltaDriveBE.Interfaces
     public interface IRideService
     {
         BookRideResponseDTO BookRide(BookRideRequestDTO request, Guid id);
-        RateRideResponseDTO RateRide(RateRideRequestDTO request);
+        RateRideResponseDTO RateRide(Guid rideId, RateRideRequestDTO request);
     }
 }

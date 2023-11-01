@@ -72,9 +72,41 @@ namespace DeltaDriveBE.Services
             return _mapper.Map<BookRideResponseDTO>(ride);
         }
 
-        public RateRideResponseDTO RateRide(RateRideRequestDTO request)
+        public RateRideResponseDTO RateRide(Guid rideId, RateRideRequestDTO requestDto)
         {
-            throw new NotImplementedException();
+            Ride? existingRide = _rideRepository.GetRideById(rideId);
+
+            // Check if ride exists
+            if (existingRide == null)
+            {
+                throw new ResourceNotFoundException("Ride with specified id doesn't exist");
+            }
+
+            Ride updatedRide = _mapper.Map<Ride>(requestDto);
+
+            ValidationResult validationResult = _validator.Validate(updatedRide, options =>
+            {
+                options.IncludeRuleSets("RatingRuleSet");
+            });
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+            existingRide.Rating = updatedRide.Rating;
+            existingRide.Comment = updatedRide.Comment;
+
+            try
+            {
+                existingRide = _rideRepository.UpdateRide(existingRide);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return _mapper.Map<RateRideResponseDTO>(existingRide);
         }
     }
 }

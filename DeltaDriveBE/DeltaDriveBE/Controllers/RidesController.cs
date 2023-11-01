@@ -1,6 +1,8 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
 using DeltaDriveBE.DTO.RideDTO;
+using DeltaDriveBE.Exceptions;
 using DeltaDriveBE.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,9 +40,31 @@ namespace DeltaDriveBE.Controllers
             return Ok(resp);
         }
 
-        //public IActionResult RateRide([FromBody] LoginPassengerRequestDTO req)
-        //{
+        [HttpPost("{id}/rate")]
+        [Authorize]
+        public IActionResult RateRide(Guid id, [FromBody] RateRideRequestDTO requestDto)
+        {
+            //Guid passengerId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            RateRideResponseDTO responseDto;
 
-        //}
+            try
+            {
+                responseDto = _rideService.RateRide(id, requestDto);
+            }
+            catch (ResourceNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+            return Ok(responseDto);
+        }
     }
 }

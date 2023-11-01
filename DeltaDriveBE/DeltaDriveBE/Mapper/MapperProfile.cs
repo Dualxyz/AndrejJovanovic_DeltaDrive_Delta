@@ -16,6 +16,9 @@ namespace DeltaDriveBE.Mapper
 
             CreateMap<BookRideRequestDTO, Ride>();
             CreateMap<Ride, BookRideResponseDTO>();
+
+            CreateMap<RateRideRequestDTO, Ride>();
+            CreateMap<Ride, RateRideResponseDTO>();
         }
     }
 }

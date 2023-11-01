@@ -1,6 +1,8 @@
 ﻿namespace DeltaDriveBE.DTO.RideDTO
 {
-    public interface RateRideRequestDTO
+    public class RateRideRequestDTO
     {
+        public int Rating { get; set; }
+        public string? Comment { get; set; }
     }
 }
