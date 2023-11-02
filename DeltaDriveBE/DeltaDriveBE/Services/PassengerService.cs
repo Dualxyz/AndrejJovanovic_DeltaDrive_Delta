@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.PassengerDTO;
 using DeltaDriveBE.Exceptions;
 using DeltaDriveBE.Interfaces;
 using DeltaDriveBE.Interfaces.Repository;
 using DeltaDriveBE.Models;
 using EntityFramework.Exceptions.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,6 +52,17 @@ namespace DeltaDriveBE.Services
             {
                 return string.Empty;
             } 
+        }
+
+        public PassengerResponseDTO GetUserById(Guid id)
+        {
+            PassengerResponseDTO user = _mapper.Map<PassengerResponseDTO>(_passangerRepository.FindPassengerById(id));
+            if (user == null)
+            {
+                throw new Exception("User doesn't exist with the provided ID");
+            }
+
+            return user;
         }
 
         public LoginPassengerResponseDTO LoginUser(LoginPassengerRequestDTO requestDTO)

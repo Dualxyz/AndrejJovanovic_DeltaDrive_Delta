@@ -1,4 +1,5 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.PassengerDTO;
 using DeltaDriveBE.Infrastructure;
 using DeltaDriveBE.Interfaces.Repository;
 using DeltaDriveBE.Models;
@@ -30,6 +31,10 @@ namespace DeltaDriveBE.Repository
             return _dbContext.Passangers.FirstOrDefault(u => u.Email == passenger.Email);
         }
 
+        public Passenger? FindPassengerById(Guid id)
+        {
+            return _dbContext.Passangers.Find(id);
+        }
 
         public List<Driver>? GetDrivers(int amount, float latitude, float longitude)
         {

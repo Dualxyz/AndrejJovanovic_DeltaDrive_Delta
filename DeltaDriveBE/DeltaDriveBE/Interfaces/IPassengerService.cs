@@ -1,4 +1,5 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
+using DeltaDriveBE.DTO.PassengerDTO;
 
 namespace DeltaDriveBE.Interfaces
 {
@@ -8,5 +9,6 @@ namespace DeltaDriveBE.Interfaces
         RegisterPassengerResponseDTO RegisterUser(RegisterPassengerRequestDTO requestDTO);
         string GetClosestDrivers(int amount, float latitude, float longitude);
         string GetDriverRating(Guid id);
+        PassengerResponseDTO GetUserById(Guid id);
     }
 }

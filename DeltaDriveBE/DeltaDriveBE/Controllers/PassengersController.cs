@@ -1,5 +1,6 @@
 ﻿using DeltaDriveBE.DTO.AuthDTO;
 using DeltaDriveBE.DTO.PassengerDTO;
+using DeltaDriveBE.Exceptions;
 using DeltaDriveBE.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,24 @@ namespace DeltaDriveBE.Controllers
             }
 
             return Ok(resp);
+        }
+
+        [HttpGet("{id}")]
+        //[Authorize]
+        public IActionResult GetUserById(Guid id)
+        {
+            PassengerResponseDTO user;
+
+            try
+            {
+                user = _passangerService.GetUserById(id);
+            }
+            catch (ResourceNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+
+            return Ok(user);
         }
 
         [HttpPost("Register")]
