@@ -53,6 +53,7 @@ namespace DeltaDriveBE.Controllers
             return Ok(userResponse);
         }
 
+
         [HttpPost("NearbyDrivers")]
         [Authorize]
         public IActionResult GetNearbyDrivers([FromBody] GetNearbyDriversRequestDTO requestDTO)

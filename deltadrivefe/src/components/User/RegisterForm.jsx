@@ -1,110 +1,106 @@
-import React, { Component } from 'react';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import axios from "axios";
 
-class RegisterForm extends Component {
-    constructor() {
-        super();
-        this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            birthdate: '',
-        };
-    }
+const registerSchema = Yup.object().shape({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string()
+        .required("Email address is required")
+        .email("Email address is not valid"),
+    password: Yup.string()
+        .required("Password is required")
+        .min(8, "Password must be at least 8 characters long"),
+    birthday: Yup.date()
+        .nullable()
+        .typeError("Birthday is required")
+        .max(new Date(), "Birthdate must be in the past"),
+});
 
-    handleFirstNameChange = (event) => {
-        this.setState({ firstName: event.target.value });
+export function RegisterForm() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        resolver: yupResolver(registerSchema),
+    });
+
+    const handleRegister = async (data) => {
+        console.log(data);
+        // reset();
+        console.log(data);
+        // reset();
+        try {
+            const response = await axios.post("https://localhost:7231/api/Passengers/Register", data);
+            console.log("API Response:", response.data);
+            reset();
+        } catch (error) {
+            console.error("API Error:", error);
+        }
     };
 
-    handleLastNameChange = (event) => {
-        this.setState({ lastName: event.target.value });
-    };
-
-    handleEmailChange = (event) => {
-        this.setState({ email: event.target.value });
-    };
-
-    handlePasswordChange = (event) => {
-        this.setState({ password: event.target.value });
-    };
-
-    handleBirthdateChange = (event) => {
-        this.setState({ birthdate: event.target.value });
-    };
-
-    handleRegister = () => {
-        const { firstName, lastName, email, password, birthdate } = this.state;
-        const apiUrl = process.env.REACT_APP_API_URL;
-        const userData = {
-            firstName,
-            lastName,
-            email,
-            password,
-            birthdate,
-        };
-
-        axios.post(`https://localhost:7231/api/Passengers/register`, userData)
-            .then((response) => {
-                this.setState({ registrationStatus: 'Registration successful!' });
-            })
-            .catch((error) => {
-                this.setState({ registrationStatus: 'Registration failed. Please try again.' });
-            });
-    };
-
-    render() {
-        return (
+    return (
+        <form onSubmit={handleSubmit(handleRegister)}>
             <div>
-                <h2>Registration Form</h2>
-                <form>
-                    <div>
-                        <label>First Name:</label>
-                        <input
-                            type="text"
-                            value={this.state.firstName}
-                            onChange={this.handleFirstNameChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Last Name:</label>
-                        <input
-                            type="text"
-                            value={this.state.lastName}
-                            onChange={this.handleLastNameChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleEmailChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={this.state.password}
-                            onChange={this.handlePasswordChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Birthday:</label>
-                        <input
-                            type="date"
-                            value={this.state.birthdate}
-                            onChange={this.handleBirthdateChange}
-                        />
-                    </div>
-                    <button type="button" onClick={this.handleRegister}>
-                        Register
-                    </button>
-                </form>
+                <label className="form_label" id="firstName">First name</label>
+                <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    {...register("firstName")}
+                    placeholder="Enter your first name"
+                />
+                <div style={{ color: "red" }}>{errors.firstName?.message}</div>
             </div>
-        );
-    }
+            <div>
+                <label className="form_label" id="lastName">Last name</label>
+                <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    {...register("lastName")}
+                    placeholder="Enter your last name"
+                />
+                <div style={{ color: "red" }}>{errors.lastName?.message}</div>
+            </div>
+            <div>
+                <label className="form_label" id="email">Email</label>
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    {...register("email")}
+                    placeholder="Enter your email address"
+                />
+                <div style={{ color: "red" }}>{errors.email?.message}</div>
+            </div>
+            <div>
+                <label className="form_label" id="password">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    {...register("password")}
+                    placeholder="Enter your password"
+                />
+                <div style={{ color: "red" }}>{errors.password?.message}</div>
+            </div>
+            <div>
+                <label className="form_label" id="birthday">Birthday</label>
+                <input
+                    type="date"
+                    name="birthday"
+                    id="birthday"
+                    {...register("birthday")}
+                />
+                <div style={{ color: "red" }}>{errors.birthday?.message}</div>
+            </div>
+            <div>
+                <button type="submit" className="btn btn-dark">Register</button>
+            </div>
+        </form>
+    );
 }
-
-export default RegisterForm;

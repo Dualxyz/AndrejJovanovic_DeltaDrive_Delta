@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import RegisterForm from "../../components/User/RegisterForm";
+import React from 'react';
+import {RegisterForm} from "../../components/User/RegisterForm";
 
 const Register = () => {
-
     return (
-        <div className="mb-5">
+        <div>
             <h1>Register</h1>
             <RegisterForm></RegisterForm>
         </div>

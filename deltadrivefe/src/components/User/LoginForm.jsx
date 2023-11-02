@@ -1,68 +1,71 @@
-import React, {Component, useState} from 'react';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import axios from "axios";
-import {useDispatch} from "react-redux";
-import { loginUser } from "../../Features/auth/authSlice";
-import login from "../../pages/Login/Login";
+import {useNavigate} from "react-router-dom";
 
-const LoginForm = () => {
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         username: '',
-    //         password: '',
-    //     };
-    // }
+const loginSchema = Yup.object().shape({
+    email: Yup.string()
+        .required("Email address is required")
+        .email("Email address is not valid"),
+    password: Yup.string()
+        .required("Password is required")
+        .min(8, "Password must be at least 8 characters long"),
+});
 
-    const [email, setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const dispatch = useDispatch();
+export function LoginForm() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({
+        resolver: yupResolver(loginSchema),
+    });
+    const navigate = useNavigate();
 
-    const handleUsernameChange = (event) => {
-        setEmail(event.target.value);
+    const handleLogin = async (data) => {
+        console.log(data);
+        // reset();
+        try {
+            const response = await axios.post("https://localhost:7231/api/Passengers/Login", data);
+            // console.log("API Response:", response.data);
+            console.warn("Token: "+ response.data.token);
+            localStorage.setItem("token", response.data.token);
+            reset();
+            navigate("/");
+        } catch (error) {
+            console.error("API Error:", error);
+        }
     };
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleLogin = () => {
-
-        const userData = {
-            email,
-            password,
-        };
-        console.log(userData);
-        dispatch(loginUser(userData));
-
-
-    };
-
-        return (
+    return (
+        <form onSubmit={handleSubmit(handleLogin)}>
             <div>
-                <h2>Login Form</h2>
-                <form>
-                    <div>
-                        <label>Username:</label>
-                        <input
-                            type="text"
-                            value={email}
-                            onChange={handleUsernameChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
-                    </div>
-                    <button type="button" onClick={handleLogin}>
-                        Login
-                    </button>
-                </form>
+                <label className="form_label" id="email">Email</label>
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    {...register("email")}
+                    placeholder="Enter your email address"
+                />
+                <div style={{ color: "red" }}>{errors.email?.message}</div>
             </div>
-        );
+            <div>
+                <label className="form_label" id="password">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    {...register("password")}
+                    placeholder="Enter your password"
+                />
+                <div style={{ color: "red" }}>{errors.password?.message}</div>
+            </div>
+            <div>
+                <button type="submit" className="btn btn-dark">Login</button>
+            </div>
+        </form>
+    );
 }
-
-export default LoginForm;

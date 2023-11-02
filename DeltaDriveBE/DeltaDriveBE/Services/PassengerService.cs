@@ -37,6 +37,7 @@ namespace DeltaDriveBE.Services
             return json;
         }
 
+        //Logic for this is broken.
         public string GetDriverRating(Guid id)
         {
             List<Ride>? driverRatings = _rideRepository.GetDriverRating(id);

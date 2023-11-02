@@ -1,15 +1,24 @@
-import {Nav, Navbar} from "react-bootstrap";
-import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {Container, Nav} from "react-bootstrap";
 
 const Header = () => {
-    // const { userInfo } = useSelector((state) => state.auth);
-    // const { userInfo } = useSelector(true);
-    return (
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        // dispatch(logoutUser());
+        localStorage.removeItem('token');
+        navigate("/login");
+    };
+    let userInfo  = false;
+    const token = localStorage.getItem('token');
+    userInfo = !!token;
+
+    return(
         <Navbar bg="dark" variant="dark" expand="md">
             <Container>
                 <Navbar.Brand as={Link} to="/">
-                    Webshop
+                    DeltaDrive
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -19,17 +28,28 @@ const Header = () => {
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to="/register">
-                            Register
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/login">
-                            Login
-                        </Nav.Link>
+                        {userInfo ? (
+                            <>
+                                <Nav.Link as={Link} to="/dashboard">
+                                    Dashboard
+                                </Nav.Link>
+                                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                            </>
+                        ) : (
+                            <>
+                                <Nav.Link as={Link} to="/register">
+                                    Register
+                                </Nav.Link>
+                                <Nav.Link as={Link} to="/login">
+                                    Login
+                                </Nav.Link>
+                            </>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-    );
+    )
 }
 
 export default Header;
