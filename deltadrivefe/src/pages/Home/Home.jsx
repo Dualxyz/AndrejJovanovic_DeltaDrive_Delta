@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import BookButton from "../../components/BookButton/BookButton";
+// import BookButton from "../../components/BookButton/BookButton";
+import BookModal from "../../components/BookButton/BookModal";
 
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    p: 4,
+
+};
 const Home = () => {
     const [data, setData] = useState(null);
     const userId = localStorage.getItem('id');
     const token = localStorage.getItem('token')
     const [currentLocation, setCurrentLocation] = useState(null);
     const [nearbyDrivers, setNearbyDrivers] = useState(null);
+
+    //MODAL STATES
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const config = {
         headers: {
@@ -81,15 +99,6 @@ const Home = () => {
                                 <th key={key}>{key}</th>
                             ))}
                             <th>REQUEST A CAR</th>
-                            {/*<th>Id</th>*/}
-                            {/*<th>Brand</th>*/}
-                            {/*<th>FirstName</th>*/}
-                            {/*<th>LastName</th>*/}
-                            {/*<th>Latitude Position</th>*/}
-                            {/*<th>Longitude Position</th>*/}
-                            {/*<th>StartPrice</th>*/}
-                            {/*<th>Price in KM</th>*/}
-                            {/*<th></th>*/}
                         </tr>
                         </thead>
                         <tbody>
@@ -99,7 +108,9 @@ const Home = () => {
                                     <td key={index}>{value}</td>
                                 ))}
                                 <td>
-                                    <BookButton driver={item} currentLocation={currentLocation}></BookButton>
+                                    {/*<BookButton driver={item} currentLocation={currentLocation}></BookButton>*/}
+                                    {/*<Button onClick={handleOpen}>Open modal</Button>*/}
+                                    <BookModal driver={item} currentLocation={currentLocation}></BookModal>
                                 </td>
                             </tr>
                         ))}

@@ -7,6 +7,7 @@ import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 
 function App() {
@@ -26,14 +27,14 @@ function App() {
                 />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                {/*<Route*/}
-                {/*    path="/dashboard"*/}
-                {/*    element={*/}
-                {/*        <PrivateRoute>*/}
-                {/*            <Dashboard />*/}
-                {/*        </PrivateRoute>*/}
-                {/*    }*/}
-                {/*/>*/}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
         </Container>
     </div>
