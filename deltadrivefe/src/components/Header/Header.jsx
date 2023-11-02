@@ -8,6 +8,7 @@ const Header = () => {
     const handleLogout = () => {
         // dispatch(logoutUser());
         localStorage.removeItem('token');
+        localStorage.removeItem('id');
         navigate("/login");
     };
     let userInfo  = false;

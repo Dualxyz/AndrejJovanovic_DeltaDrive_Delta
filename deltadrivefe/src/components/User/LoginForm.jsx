@@ -32,6 +32,7 @@ export function LoginForm() {
             // console.log("API Response:", response.data);
             console.warn("Token: "+ response.data.token);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("id", response.data.id);
             reset();
             navigate("/");
         } catch (error) {
