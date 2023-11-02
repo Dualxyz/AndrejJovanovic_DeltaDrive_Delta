@@ -99,7 +99,7 @@ const Home = () => {
                                     <td key={index}>{value}</td>
                                 ))}
                                 <td>
-                                    <BookButton value={item}></BookButton>
+                                    <BookButton driver={item} currentLocation={currentLocation}></BookButton>
                                 </td>
                             </tr>
                         ))}
