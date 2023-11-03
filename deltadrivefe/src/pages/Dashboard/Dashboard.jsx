@@ -3,6 +3,8 @@ import {useLocation} from "react-router-dom";
 import {useState,useEffect} from "react";
 import {Countdown} from "./Countdown";
 import moment from "moment/moment";
+import Comment from "../../components/BookButton/Comment";
+import RatingSystem from "../../components/BookButton/RatingSystem";
 
 const Dashboard = () => {
 
@@ -46,29 +48,26 @@ const Dashboard = () => {
     return(
     <div>
         <h1>Dashboard</h1>
+        <div>
+            <span>Countdown from DRIVER to PASSENGER: </span>
+            {rideArrived ? <div style={{color: 'green', fontWeight:900, fontSize:'50px'}}>Ride arrived</div>:
+                <Countdown startingTime={startingTimeCustomerArrival} arrivalAt={customerArrivalAt} currentTime={currentTime} setCurrentTime={setCurrentTime}/>
+            }
+        </div>
 
-        <p>RideID: {rideData.id}</p>
-        <p>DriverID: {rideData.driverId}</p>
-        <p>PassengerID: {rideData.passengerId}</p>
-        <p>RideStatus: {rideData.rideStatus}</p>
+        <div>
+            <span>Countdown from PASSENGER to DESTINATION: </span>
+            {rideCompleted ? <div style={{color: 'green', fontWeight:900, fontSize:'50px'}}>Ride completed</div> : destinationArrivalAt && <Countdown startingTime={startingTimeDestinationArrival}  arrivalAt={destinationArrivalAt}  currentTime={currentTime} setCurrentTime={setCurrentTime}/>}
+        </div>
 
-        {/*MY POSITION*/}
-        <p>startLatitude: {rideData.startLatitude}</p>
-        <p>startLongitude: {rideData.startLongitude}</p>
+        <div>
+            {rideCompleted ?
+                <div>
+                    <RatingSystem starCount={5}></RatingSystem>
+                    <Comment></Comment>
+                </div>: <span></span>}
+        </div>
 
-        {/*MY DESTINATION*/}
-        <p>destinationLatitude: {rideData.destinationLatitude}</p>
-        <p>destinationLongitude: {rideData.destinationLongitude}</p>
-        {/*CAR DESTINATION*/}
-        <p>Ride Latitude: {rideLat}</p>
-        <p>Ride Longitude: {rideLon}</p>
-        <p>totalPrice: {rideData.totalPrice}</p>
-        {/*<p>rating: {rideData.rating}</p>*/}
-        {/*<p>comment: {rideData.comment}</p>*/}
-        <p>Time to arive to customer: {ArriveTimeToCustomer}</p>
-        <p>Time to arive from customer to destination: {ArriveTimeToDestination}</p>
-        {rideArrived ? "Ride arrived": <Countdown startingTime={startingTimeCustomerArrival} arrivalAt={customerArrivalAt} currentTime={currentTime} setCurrentTime={setCurrentTime}/>}
-        {rideCompleted ? "Ride completed" : destinationArrivalAt && <Countdown startingTime={startingTimeDestinationArrival}  arrivalAt={destinationArrivalAt}  currentTime={currentTime} setCurrentTime={setCurrentTime}/>}
 
     </div>
     );

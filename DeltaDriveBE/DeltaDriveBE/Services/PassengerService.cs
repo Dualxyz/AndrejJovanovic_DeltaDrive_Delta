@@ -36,6 +36,12 @@ namespace DeltaDriveBE.Services
         {
             List<Driver>? nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
             List<GetNearbyDriversResponseDTO> driversDto = _mapper.Map<List<GetNearbyDriversResponseDTO>>(nearbyDrivers);
+            foreach(var NearbyDriver in driversDto)
+            {
+                NearbyDriver.PricePerKm = Math.Round(NearbyDriver.PricePerKm, 2);
+                NearbyDriver.StartPrice = Math.Round(NearbyDriver.StartPrice, 2);
+            }
+
             string json = JsonConvert.SerializeObject(driversDto);
             return json;
         }
