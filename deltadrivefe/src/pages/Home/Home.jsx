@@ -98,9 +98,9 @@ const Home = () => {
                         <thead>
                         <tr>
                             {Object.keys(nearbyDrivers[0]).map((key) => (
-                                <th key={key}>{key}</th>
+                                <th style={{background: '#000', color:'white'}} key={key}>{key}</th>
                             ))}
-                            <th>REQUEST A CAR</th>
+                            {/*<th style={{background: '#000', color:'white'}}>REQUEST A CAR</th>*/}
                         </tr>
                         </thead>
                         <tbody>

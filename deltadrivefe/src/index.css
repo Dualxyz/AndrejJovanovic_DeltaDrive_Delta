@@ -29,3 +29,17 @@ button[type="submit"]{
   margin-top: 16px;
 }
 
+tr{
+  &:nth-of-type(odd){
+    background: #EEEEEE;
+  }
+}
+
+/*TEST*/
+/*.login__form{*/
+/*  margin-left: 25%;*/
+/*  text-align: center;*/
+/*  width: 50%;*/
+/*  background: red;*/
+
+/*}*/

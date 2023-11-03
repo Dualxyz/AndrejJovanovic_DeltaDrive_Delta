@@ -38,9 +38,9 @@ const BookModal = (props) => {
     };
 
     return(
-        <div>
+        <span>
             {/*{console.log(currentLocation)}*/}
-            <Button onClick={handleOpen}>Open modal</Button>
+            <Button style={{width: '100px', background: 'green', color: 'black',  fontWeight: 700}} onClick={handleOpen}>Book now</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -51,22 +51,22 @@ const BookModal = (props) => {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Booking {driver.FirstName} {driver.LastName}?
+                        Driver name: {driver.FirstName} {driver.LastName}
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Typography>Car: {driver.Brand}</Typography>
-                        <Typography>Price per KM: {driver.PricePerKm} EUR</Typography>
+                        <Typography component={'div'} variant={'body2'}>Car: {driver.Brand}</Typography>
+                        <Typography component={'div'} variant={'body2'}>Price per KM: {driver.PricePerKm.toFixed(2)} EUR</Typography>
                         <span>DestLAT</span>
                         <input onChange={handleLATChange}></input>
                         <span>DestLON</span>
                         <input onChange={handleLONChange}></input>
                     </Typography>
-                    <Typography id="modal-modal">
-                        <BookButton driver={driver} currentLocation={currentLocation} latitude={destLatitude} longitude={destLongitude}></BookButton>
+                    <Typography id="modal-modal" component={'span'} variant={'body2'}>
+                        <BookButton handleClose={handleClose} driver={driver} currentLocation={currentLocation} latitude={destLatitude} longitude={destLongitude}></BookButton>
                     </Typography>
                 </Box>
             </Modal>
-        </div>
+        </span>
 
     )
 }

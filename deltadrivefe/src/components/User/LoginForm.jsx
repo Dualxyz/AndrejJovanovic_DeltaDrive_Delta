@@ -38,8 +38,8 @@ export function LoginForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(handleLogin)}>
-            <div>
+        <form onSubmit={handleSubmit(handleLogin)} className="login__form">
+            <div >
                 <label className="form_label" id="email">Email</label>
                 <input
                     type="text"
