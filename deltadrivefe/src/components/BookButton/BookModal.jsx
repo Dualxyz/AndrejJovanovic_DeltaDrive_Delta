@@ -54,11 +54,11 @@ const BookModal = (props) => {
                         Booking {driver.FirstName} {driver.LastName}?
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <p>Car: {driver.Brand}</p>
-                        <p>Price per KM: {driver.PricePerKm} EUR</p>
-                        <label>DestLAT</label>
+                        <Typography>Car: {driver.Brand}</Typography>
+                        <Typography>Price per KM: {driver.PricePerKm} EUR</Typography>
+                        <span>DestLAT</span>
                         <input onChange={handleLATChange}></input>
-                        <label>DestLON</label>
+                        <span>DestLON</span>
                         <input onChange={handleLONChange}></input>
                     </Typography>
                     <Typography id="modal-modal">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 // import BookButton from "../../components/BookButton/BookButton";
 import BookModal from "../../components/BookButton/BookModal";
+import {getPassengerDetails, getNearbyDrivers} from "../../Service/PassengerService";
 
 
 const style = {
@@ -34,16 +34,17 @@ const Home = () => {
     };
 
     useEffect(() => {
-        const apiUrl = "https://localhost:7231/api/Passengers/";
+        async function fetchData() {
+            try {
+                const data = await getPassengerDetails();
+                setData(data);
+            } catch (error) {
+                console.error("API Error:", error);
+            }
+        }
 
-        axios.get(apiUrl + userId)
-            .then((response) => {
-                setData(response.data);
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.error("API request error:", error);
-            });
+        fetchData(); // Call the async function immediately
+
     }, []);
 
     const handleGetLocation = async () => {
@@ -55,30 +56,29 @@ const Home = () => {
 
                 const { latitude, longitude } = position.coords;
                 setCurrentLocation({ latitude, longitude });
+
+
             } catch (error) {
                 console.error("Error getting location:", error);
             }
         } else {
             console.error("Geolocation is not supported by your browser.");
         }
-
-        const apiUrl = "https://localhost:7231/api/Passengers/NearbyDrivers";
-
-        await axios.post(apiUrl, currentLocation, config)
-            .then((response) => {
-                setNearbyDrivers(response.data);
-                console.log(response.data);
-                // console.log(Object.keys(response.data[0])); // Extract keys from the first object
-            })
-            .catch((error) => {
-                console.error("API request error:", error);
-            });
     };
+
+    const handleGetNearbyDrivers = async () => {
+        try{
+            const response = await getNearbyDrivers(currentLocation);
+            setNearbyDrivers(response);
+        } catch (error) {
+            console.error("API Error:", error);
+        }
+
+    }
 
     return (
         <div className="text-center">
             <h1>Welcome to DeltaDrive's Homepage, {data ? data.firstName : ''}</h1>
-            <p>FUNCTIONALITY WILL BE INSERTED HERE</p>
 
             <button onClick={handleGetLocation}>Get Location</button>
             {currentLocation && (
@@ -86,9 +86,11 @@ const Home = () => {
                     <p>Your Current Location:</p>
                     <p>Latitude: {currentLocation.latitude}</p>
                     <p>Longitude: {currentLocation.longitude}</p>
+                    <button onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
                 </div>
             )}
 
+            <div>
             {nearbyDrivers && (
                 <div>
                     <h2>Nearby Drivers</h2>
@@ -118,6 +120,7 @@ const Home = () => {
                     </table>
                 </div>
             )}
+            </div>
 
         </div>
     );

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import axios from "axios";
+import { registerUser } from "../../Service/AuthService";
 
 const registerSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -31,11 +31,8 @@ export function RegisterForm() {
     const handleRegister = async (data) => {
         console.log(data);
         // reset();
-        console.log(data);
-        // reset();
         try {
-            const response = await axios.post("https://localhost:7231/api/Passengers/Register", data);
-            console.log("API Response:", response.data);
+            const response = await registerUser(data);
             reset();
         } catch (error) {
             console.error("API Error:", error);

@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {login} from "../../Service/AuthService";
 
 const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -28,11 +29,7 @@ export function LoginForm() {
         console.log(data);
         // reset();
         try {
-            const response = await axios.post("https://localhost:7231/api/Passengers/Login", data);
-            // console.log("API Response:", response.data);
-            console.warn("Token: "+ response.data.token);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("id", response.data.id);
+            const response = await login(data);
             reset();
             navigate("/");
         } catch (error) {

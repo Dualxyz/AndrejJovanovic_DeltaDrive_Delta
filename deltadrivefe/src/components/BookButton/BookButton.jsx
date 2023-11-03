@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {bookRide} from "../../Service/RideService";
 
 const BookButton = (props) => {
     const navigate = useNavigate();
@@ -19,25 +20,20 @@ const BookButton = (props) => {
         },
     };
 
-
     const bookRidehandler = async () => {
-        await axios.post("https://localhost:7231/api/Rides", payload, config)
-            .then((response) => {
-                console.log(response.data);
-                if(response.data.rideStatus === 2){
-                    console.log("Accepted");
-
-                    // console.log(driverLat);
-                    navigate("/dashboard", { state: { rideData: response.data,  rideLat: props.driver.Latitude, rideLon: props.driver.Longitude }});
-                } else {
-                    console.log("rejected");
-                    navigate("/");
-                }
-                // console.log(Object.keys(response.data[0])); // Extract keys from the first object
-            })
-            .catch((error) => {
-                console.error("API request error:", error);
-            });
+        try{
+            let response = await bookRide(payload);
+            console.warn(response);
+            if(response.data.rideStatus === 2){
+                console.log("Accepted");
+                navigate("/dashboard", { state: { rideData: response.data,  rideLat: props.driver.Latitude, rideLon: props.driver.Longitude }});
+            } else {
+                console.log("rejected");
+                navigate("/");
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+        }
     }
 
     return(
