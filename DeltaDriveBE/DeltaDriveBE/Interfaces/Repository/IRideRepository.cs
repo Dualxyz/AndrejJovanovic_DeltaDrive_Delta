@@ -8,5 +8,6 @@ namespace DeltaDriveBE.Interfaces.Repository
         public List<Ride>? GetDriverRating(Guid id);
         public Ride CreateRide(Ride ride);
         public Ride UpdateRide(Ride ride);
+        public List<Ride>? GetHistoryById(Guid id);
     }
 }

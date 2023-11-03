@@ -31,6 +31,7 @@ const Header = () => {
                     <Nav>
                         {userInfo ? (
                             <>
+                                <Nav.Link as={Link} to="/ridehistory">RideHistory</Nav.Link>
                                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                             </>
                         ) : (

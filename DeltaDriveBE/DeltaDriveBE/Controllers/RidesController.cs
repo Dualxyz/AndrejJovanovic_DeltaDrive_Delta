@@ -40,6 +40,26 @@ namespace DeltaDriveBE.Controllers
             return Ok(resp);
         }
 
+        [HttpGet]
+        [Authorize]
+        //U DTO -> ID Vozaca i Passenger ID
+        public IActionResult GetHistory()
+        {
+            Guid passengerId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            string resp;
+
+            try
+            {
+                resp = _rideService.GetHistory(passengerId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Content(resp, "application/json");
+        }
+
         [HttpPost("{id}/rate")]
         [Authorize]
         public IActionResult RateRide(Guid id, [FromBody] RateRideRequestDTO requestDto)

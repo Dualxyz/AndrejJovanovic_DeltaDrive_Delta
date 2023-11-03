@@ -8,6 +8,7 @@ import Header from "./components/Header/Header";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import RideHistory from "./pages/RideHistory/RideHistory";
 
 
 function App() {
@@ -32,6 +33,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <Dashboard />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/ridehistory"
+                    element={
+                        <PrivateRoute>
+                            <RideHistory />
                         </PrivateRoute>
                     }
                 />

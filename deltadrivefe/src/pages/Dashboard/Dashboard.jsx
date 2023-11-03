@@ -7,12 +7,10 @@ import Comment from "../../components/BookButton/Comment";
 import RatingSystem from "../../components/BookButton/RatingSystem";
 
 const Dashboard = () => {
-
     const location = useLocation();
     const rideData = location.state && location.state.rideData;
     const rideLat = location.state && location.state.rideLat;
     const rideLon = location.state && location.state.rideLon;
-
 
     const ArriveTimeToCustomer=calculateDistance(rideLat, rideLon, rideData.startLatitude, rideData.startLongitude) / 60;
     const ArriveTimeToDestination=calculateDistance(rideData.startLatitude, rideData.startLongitude, rideData.destinationLatitude, rideData.destinationLongitude) / 60;
@@ -23,7 +21,6 @@ const Dashboard = () => {
     const [currentTime, setCurrentTime] = useState(moment());
 
     const [review, setReview] = useState(0);
-    const [comment, setComment] = useState("");
 
     const customerArrivalAt = useMemo(() => {
         return moment(startingTimeCustomerArrival).add(ArriveTimeToCustomer  * 3600 * 1000, "milliseconds");

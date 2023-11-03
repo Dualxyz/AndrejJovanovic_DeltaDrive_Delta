@@ -32,3 +32,14 @@ export const getNearbyDrivers = async (currentLocation) =>{
         console.log("API Error: ", error);
     }
 }
+export const getRideHistory = async (currentLocation) =>{
+    const apiUrl = "https://localhost:7231/api/Rides";
+    // console.warn(currentLocation);
+    try{
+        const response = await axios.get(apiUrl,config);
+        console.log("API Response:", response.data);
+        return response.data;
+    } catch (error){
+        console.log("API Error: ", error);
+    }
+}

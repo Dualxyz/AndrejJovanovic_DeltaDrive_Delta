@@ -8,6 +8,7 @@ using DeltaDriveBE.Models;
 using System.Configuration;
 using FluentValidation;
 using FluentValidation.Results;
+using Newtonsoft.Json;
 
 namespace DeltaDriveBE.Services
 {
@@ -100,6 +101,21 @@ namespace DeltaDriveBE.Services
 
 
             return _mapper.Map<BookRideResponseDTO>(ride);
+        }
+
+        public string GetHistory(Guid id)
+        {
+            List<Ride>? userHistory = _rideRepository.GetHistoryById(id);
+            if (userHistory != null && userHistory.Count > 0)
+            {
+                //double? averageRating = (double?)userHistory.Sum(rating => rating.Rating) / userHistory.Count;
+                string json = JsonConvert.SerializeObject(new { userHistory = userHistory });
+                return json;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         public RateRideResponseDTO RateRide(Guid rideId, RateRideRequestDTO requestDto)

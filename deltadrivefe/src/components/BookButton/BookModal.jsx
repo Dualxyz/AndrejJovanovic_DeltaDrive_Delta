@@ -40,7 +40,7 @@ const BookModal = (props) => {
     return(
         <span>
             {/*{console.log(currentLocation)}*/}
-            <Button style={{width: '100px', background: 'green', color: 'black',  fontWeight: 700}} onClick={handleOpen}>Book now</Button>
+            <Button style={{width: '100px', background: '#164372', color: 'white',  fontWeight: 700}} onClick={handleOpen}>Book now</Button>
             <Modal
                 open={open}
                 onClose={handleClose}

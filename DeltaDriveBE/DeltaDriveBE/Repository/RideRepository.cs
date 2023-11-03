@@ -60,5 +60,14 @@ namespace DeltaDriveBE.Repository
             List<Ride>? result = _dbContext.Rides.FromSqlRaw(query).ToList();
             return result;
         }
+
+        public List<Ride>? GetHistoryById(Guid id)
+        {
+            string query = $@"
+            SELECT * FROM dbo.Rides WHERE PassengerId = '{id}';
+            ";
+            List<Ride>? result = _dbContext.Rides.FromSqlRaw(query).ToList();
+            return result;
+        }
     }
 }

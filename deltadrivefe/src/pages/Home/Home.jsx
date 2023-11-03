@@ -17,10 +17,13 @@ const style = {
 };
 const Home = () => {
     const [data, setData] = useState(null);
-    const userId = localStorage.getItem('id');
-    const token = localStorage.getItem('token')
+    // const userId = localStorage.getItem('id');
+    // const token = localStorage.getItem('token')
     const [currentLocation, setCurrentLocation] = useState(null);
     const [nearbyDrivers, setNearbyDrivers] = useState(null);
+    const [userId, getUserId] = useState(null);
+    const [token, getToken] = useState(null);
+
 
     //MODAL STATES
     const [open, setOpen] = React.useState(false);
@@ -44,6 +47,8 @@ const Home = () => {
         }
 
         fetchData(); // Call the async function immediately
+        getToken(localStorage.getItem('token'));
+        getUserId(localStorage.getItem('id'))
 
     }, []);
 
@@ -78,29 +83,49 @@ const Home = () => {
 
     return (
         <div className="text-center">
-            <h1>Welcome to DeltaDrive's Homepage, {data ? data.firstName : ''}</h1>
+            <h2 style={{fontWeight: 800}}>Welcome to DeltaDrive's Homepage, {data ? data.firstName : ''}!</h2>
 
-            <button onClick={handleGetLocation}>Get Location</button>
+            <button className="btn btn-dark" onClick={handleGetLocation}>Get Location</button>
             {currentLocation && (
+                // <div>
+                //     <p>Your Current Location:</p>
+                //     <p>Latitude: {currentLocation.latitude}</p>
+                //     <p>Longitude: {currentLocation.longitude}</p>
+                //     <button className="btn btn-dark" onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
+                // </div>
                 <div>
-                    <p>Your Current Location:</p>
-                    <p>Latitude: {currentLocation.latitude}</p>
-                    <p>Longitude: {currentLocation.longitude}</p>
-                    <button onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
+
+                <div style={{display: 'flex', justifyContent: 'center', margin: '0 30%'}}>
+                    <table className="table">
+                        <thead className="thead-dark">
+                        <tr>
+                            <th scope="col">Your Current Location:</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Latitude: <span style={{fontWeight: 800}}>{currentLocation.latitude}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Longitude: <span style={{fontWeight: 800}}>{currentLocation.longitude}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <button className="btn btn-dark" onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
                 </div>
             )}
 
             <div>
             {nearbyDrivers && (
                 <div>
-                    <h2>Nearby Drivers</h2>
+                    <h2 style={{marginTop: '24px', fontWeight: 800}}>Nearby Drivers</h2>
                     <table>
                         <thead>
                         <tr>
                             {Object.keys(nearbyDrivers[0]).map((key) => (
                                 <th style={{background: '#000', color:'white'}} key={key}>{key}</th>
                             ))}
-                            {/*<th style={{background: '#000', color:'white'}}>REQUEST A CAR</th>*/}
                         </tr>
                         </thead>
                         <tbody>
@@ -110,8 +135,6 @@ const Home = () => {
                                     <td key={index}>{value}</td>
                                 ))}
                                 <td>
-                                    {/*<BookButton driver={item} currentLocation={currentLocation}></BookButton>*/}
-                                    {/*<Button onClick={handleOpen}>Open modal</Button>*/}
                                     <BookModal driver={item} currentLocation={currentLocation}></BookModal>
                                 </td>
                             </tr>

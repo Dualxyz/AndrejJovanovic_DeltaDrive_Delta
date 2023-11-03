@@ -1,4 +1,5 @@
 ﻿using DeltaDriveBE.DTO.RideDTO;
+using DeltaDriveBE.Models;
 
 namespace DeltaDriveBE.Interfaces
 {
@@ -6,5 +7,6 @@ namespace DeltaDriveBE.Interfaces
     {
         BookRideResponseDTO BookRide(BookRideRequestDTO request, Guid id);
         RateRideResponseDTO RateRide(Guid rideId, RateRideRequestDTO request);
+        string GetHistory(Guid id);
     }
 }

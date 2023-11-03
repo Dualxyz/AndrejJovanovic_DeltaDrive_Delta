@@ -50,7 +50,10 @@ function CommentBox(props) {
             rows={4} // Specify the number of rows for the textarea
             cols={40} // Specify the number of columns for the textarea
         />
-                <button type="submit">Submit</button>
+
+                <div>
+                    <button className="btn btn-dark" type="submit">Submit</button>
+                </div>
             </form>
         </div>
     );
