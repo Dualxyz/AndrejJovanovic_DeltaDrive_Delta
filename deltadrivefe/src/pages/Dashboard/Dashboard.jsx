@@ -22,6 +22,9 @@ const Dashboard = () => {
     const [rideCompleted, setRideCompleted] = useState(false);
     const [currentTime, setCurrentTime] = useState(moment());
 
+    const [review, setReview] = useState(0);
+    const [comment, setComment] = useState("");
+
     const customerArrivalAt = useMemo(() => {
         return moment(startingTimeCustomerArrival).add(ArriveTimeToCustomer  * 3600 * 1000, "milliseconds");
     }, [startingTimeCustomerArrival, ArriveTimeToCustomer]);
@@ -63,8 +66,9 @@ const Dashboard = () => {
         <div>
             {rideCompleted ?
                 <div>
-                    <RatingSystem starCount={5}></RatingSystem>
-                    <Comment></Comment>
+                    {/*<div>{rideData.id}</div>*/}
+                    <RatingSystem starCount={5} setReview={setReview} ></RatingSystem>
+                    <Comment review={review} rideId={rideData.id}></Comment>
                 </div>: <span></span>}
         </div>
 
