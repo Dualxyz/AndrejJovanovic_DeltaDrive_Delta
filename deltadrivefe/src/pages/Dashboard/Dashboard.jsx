@@ -11,35 +11,6 @@ const Dashboard = () => {
     const rideLat = location.state && location.state.rideLat;
     const rideLon = location.state && location.state.rideLon;
 
-    const [test, setTest] = useState(0);
-
-
-    // useEffect(() => {
-    //     let isMounted = true; // A variable to track if the component is mounted
-    //
-    //     const fetchData = async () => {
-    //         for (let i = Math.ceil(ArriveTimeToCustomer * 3600); i >= 0; i--) {
-    //             if (!isMounted) {
-    //                 // If the component is unmounted, exit the loop
-    //                 break;
-    //             }
-    //             //TODO - fix timer formating and set flags for api call to know if ride taken
-    //             //TODO - add be endpoint to handle flags for ride taken/free
-    //             //TODO - add flag for one timer done / start another one aka if for xDDD
-    //             await timeout(1000);
-    //             setTest(i);
-    //         }
-    //     };
-    //
-    //     fetchData();
-    //
-    //     return () => {
-    //         isMounted = false; // Mark the component as unmounted in the cleanup function
-    //     };
-    // }, []);
-
-    let carArrivedToCustomer = false;
-    let carArrivedToDestination = false;
 
     const ArriveTimeToCustomer=calculateDistance(rideLat, rideLon, rideData.startLatitude, rideData.startLongitude) / 60;
     const ArriveTimeToDestination=calculateDistance(rideData.startLatitude, rideData.startLongitude, rideData.destinationLatitude, rideData.destinationLongitude) / 60;

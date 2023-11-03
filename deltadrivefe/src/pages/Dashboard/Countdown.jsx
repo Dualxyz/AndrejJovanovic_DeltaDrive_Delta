@@ -3,11 +3,6 @@ import moment from "moment";
 import {set} from "react-hook-form";
 
 export function Countdown({arrivalAt, startingTime, currentTime, setCurrentTime}) {
-    // const [startingTime] = useState(moment());
-    // const [currentTime, setCurrentTime] = useState(moment());
-
-    // const arrivalTime = 2;
-
     useEffect(() => {
         const interval = setInterval(() => setCurrentTime(moment(), 1000));
 

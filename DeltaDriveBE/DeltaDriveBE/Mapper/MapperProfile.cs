@@ -23,6 +23,7 @@ namespace DeltaDriveBE.Mapper
 
             //Passenger->PassengerResponseDTO
             CreateMap<Passenger, PassengerResponseDTO>();
+            CreateMap<GetNearbyDriversResponseDTO, Driver>().ReverseMap();
         }
     }
 }
