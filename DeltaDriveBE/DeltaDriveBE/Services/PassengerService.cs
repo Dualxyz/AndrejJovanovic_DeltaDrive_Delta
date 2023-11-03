@@ -35,7 +35,8 @@ namespace DeltaDriveBE.Services
         public string GetClosestDrivers(int amount, float latitude, float longitude)
         {
             List<Driver>? nearbyDrivers = _passangerRepository.GetDrivers(amount, latitude, longitude);
-            string json = JsonConvert.SerializeObject(nearbyDrivers);
+            List<GetNearbyDriversResponseDTO> driversDto = _mapper.Map<List<GetNearbyDriversResponseDTO>>(nearbyDrivers);
+            string json = JsonConvert.SerializeObject(driversDto);
             return json;
         }
 

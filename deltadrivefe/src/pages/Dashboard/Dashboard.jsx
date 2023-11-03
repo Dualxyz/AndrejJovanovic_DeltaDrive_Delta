@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import {useState,useEffect} from "react";
+import {Countdown} from "./Countdown";
+import moment from "moment/moment";
 
 const Dashboard = () => {
 
@@ -12,37 +14,63 @@ const Dashboard = () => {
     const [test, setTest] = useState(0);
 
 
-    useEffect(() => {
-        let isMounted = true; // A variable to track if the component is mounted
-
-        const fetchData = async () => {
-            for (let i = ArriveTimeToCustomer * 3600; i > 0; i--) {
-                if (!isMounted) {
-                    // If the component is unmounted, exit the loop
-                    break;
-                }
-                //TODO - fix timer formating and set flags for api call to know if ride taken
-                //TODO - add be endpoint to handle flags for ride taken/free
-                //TODO - add flag for one timer done / start another one aka if for xDDD
-                await timeout(1000);
-                setTest(i);
-            }
-        };
-
-        fetchData();
-
-        return () => {
-            isMounted = false; // Mark the component as unmounted in the cleanup function
-        };
-    }, []);
+    // useEffect(() => {
+    //     let isMounted = true; // A variable to track if the component is mounted
+    //
+    //     const fetchData = async () => {
+    //         for (let i = Math.ceil(ArriveTimeToCustomer * 3600); i >= 0; i--) {
+    //             if (!isMounted) {
+    //                 // If the component is unmounted, exit the loop
+    //                 break;
+    //             }
+    //             //TODO - fix timer formating and set flags for api call to know if ride taken
+    //             //TODO - add be endpoint to handle flags for ride taken/free
+    //             //TODO - add flag for one timer done / start another one aka if for xDDD
+    //             await timeout(1000);
+    //             setTest(i);
+    //         }
+    //     };
+    //
+    //     fetchData();
+    //
+    //     return () => {
+    //         isMounted = false; // Mark the component as unmounted in the cleanup function
+    //     };
+    // }, []);
 
     let carArrivedToCustomer = false;
     let carArrivedToDestination = false;
 
     const ArriveTimeToCustomer=calculateDistance(rideLat, rideLon, rideData.startLatitude, rideData.startLongitude) / 60;
     const ArriveTimeToDestination=calculateDistance(rideData.startLatitude, rideData.startLongitude, rideData.destinationLatitude, rideData.destinationLongitude) / 60;
+    const [startingTimeCustomerArrival] = useState(moment());
+    const [startingTimeDestinationArrival] = useState(moment());
+    const [rideArrived, setRideArrived] = useState(false);
+    const [rideCompleted, setRideCompleted] = useState(false);
+    const [currentTime, setCurrentTime] = useState(moment());
 
+    const customerArrivalAt = useMemo(() => {
+        return moment(startingTimeCustomerArrival).add(ArriveTimeToCustomer  * 3600 * 1000, "milliseconds");
+    }, [startingTimeCustomerArrival, ArriveTimeToCustomer]);
 
+    const destinationArrivalAt = useMemo(() => {
+        if (!rideArrived) {
+            return null;
+        }
+        return moment(startingTimeDestinationArrival).add(ArriveTimeToDestination  * 3600 * 1000, "milliseconds");
+    }, [rideArrived, startingTimeDestinationArrival, ArriveTimeToDestination]);
+
+    useEffect(() => {
+        if (rideArrived === false && customerArrivalAt && customerArrivalAt.isBefore(currentTime)) {
+            setRideArrived(true);
+        }
+    }, [currentTime, customerArrivalAt, rideArrived]);
+
+    useEffect(() => {
+        if (rideCompleted === false && destinationArrivalAt && destinationArrivalAt.isBefore(currentTime)) {
+            setRideCompleted(true);
+        }
+    }, [currentTime, destinationArrivalAt, rideCompleted]);
 
     return(
     <div>
@@ -68,7 +96,8 @@ const Dashboard = () => {
         {/*<p>comment: {rideData.comment}</p>*/}
         <p>Time to arive to customer: {ArriveTimeToCustomer}</p>
         <p>Time to arive from customer to destination: {ArriveTimeToDestination}</p>
-        <p> {test} </p>
+        {rideArrived ? "Ride arrived": <Countdown startingTime={startingTimeCustomerArrival} arrivalAt={customerArrivalAt} currentTime={currentTime} setCurrentTime={setCurrentTime}/>}
+        {rideCompleted ? "Ride completed" : destinationArrivalAt && <Countdown startingTime={startingTimeDestinationArrival}  arrivalAt={destinationArrivalAt}  currentTime={currentTime} setCurrentTime={setCurrentTime}/>}
 
     </div>
     );
