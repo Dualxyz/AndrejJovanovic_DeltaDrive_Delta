@@ -10,7 +10,7 @@ const config = {
 };
 
 export const getPassengerDetails = async (data) => {
-    const apiUrl = "https://localhost:7231/api/Passengers/";
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/Passengers/`;
 
     try{
         const response = await axios.get(apiUrl + userId)
@@ -22,7 +22,7 @@ export const getPassengerDetails = async (data) => {
 }
 
 export const getNearbyDrivers = async (currentLocation) =>{
-    const apiUrl = "https://localhost:7231/api/Passengers/NearbyDrivers";
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/Passengers/NearbyDrivers`;
     // console.warn(currentLocation);
     try{
         const response = await axios.post(apiUrl, currentLocation, config);
@@ -33,7 +33,7 @@ export const getNearbyDrivers = async (currentLocation) =>{
     }
 }
 export const getRideHistory = async (currentLocation) =>{
-    const apiUrl = "https://localhost:7231/api/Rides";
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/Rides`;
     // console.warn(currentLocation);
     try{
         const response = await axios.get(apiUrl,config);

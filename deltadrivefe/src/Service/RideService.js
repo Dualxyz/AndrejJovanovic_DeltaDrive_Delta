@@ -9,7 +9,7 @@ const config = {
 };
 
 export const bookRide = async (data) => {
-    const apiUrl = "https://localhost:7231/api/Rides";
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/Rides`;
 
     try{
         const response = await axios.post(apiUrl, data, config);
@@ -21,7 +21,7 @@ export const bookRide = async (data) => {
 }
 
 export const rateRide = async (rideId, review, comment) => {
-    const apiUrl = `https://localhost:7231/api/Rides/${rideId}/rate`;
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/Rides/${rideId}/rate`;
     let rating = Number(review);
 
     try{
