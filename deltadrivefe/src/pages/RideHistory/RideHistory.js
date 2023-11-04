@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import BookModal from "../../components/BookButton/BookModal";
-import {getNearbyDrivers, getPassengerDetails, getRideHistory} from "../../Service/PassengerService";
+import {getRideHistory} from "../../Service/PassengerService";
 
 
 const RideHistory = () => {
@@ -25,12 +24,9 @@ const RideHistory = () => {
     return (
         <div>
             {rideHistory && (
-                <table>
+                <table style={{width: '100%'}}>
                     <thead>
-                    <tr>
-                        {/*starting and ending location, total price of the trip and a driver that was booked at that point of time.*/}
-                        {/*<th>ID</th>*/}
-                        {/*<th>Driver ID</th>*/}
+                    <tr style={{height:'40px', background:'black', color:'white'}}>
                         <th>Ride Price</th>
                         <th>Start Latitude</th>
                         <th>Start Longitude</th>
@@ -44,15 +40,14 @@ const RideHistory = () => {
                     <tbody>
                     {rideHistory.userHistory.map((data, index) => (
                         <tr key={index}>
-                            {/*<td>{data.Id}</td>*/}
-                            {/*<td>{data.DriverId}</td>*/}
                             <td>{data.TotalPrice.toFixed(2)} EUR</td>
                             <td>{data.StartLatitude}</td>
                             <td>{data.StartLongitude}</td>
                             <td>{data.DestinationLatitude}</td>
                             <td>{data.DestinationLongitude}</td>
-                            <td>{data.Comment}</td>
+
                             <td>{data.Rating}</td>
+                            <td>{data.Comment}</td>
                         </tr>
                     ))}
                     </tbody>

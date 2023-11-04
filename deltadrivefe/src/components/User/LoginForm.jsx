@@ -32,6 +32,7 @@ export function LoginForm() {
             const response = await login(data);
             reset();
             navigate("/");
+            window.location.reload();
         } catch (error) {
             console.error("API Error:", error);
         }
@@ -39,34 +40,6 @@ export function LoginForm() {
 
     return (
         <div>
-        {/*<form onSubmit={handleSubmit(handleLogin)} className="login__form">*/}
-        {/*    <div >*/}
-        {/*        <label className="form_label" id="email">Email</label>*/}
-        {/*        <input*/}
-        {/*            type="text"*/}
-        {/*            name="email"*/}
-        {/*            id="email"*/}
-        {/*            {...register("email")}*/}
-        {/*            placeholder="Enter your email address"*/}
-        {/*        />*/}
-        {/*        <div style={{ color: "red" }}>{errors.email?.message}</div>*/}
-        {/*    </div>*/}
-        {/*    <div>*/}
-        {/*        <label className="form_label" id="password">Password</label>*/}
-        {/*        <input*/}
-        {/*            type="password"*/}
-        {/*            name="password"*/}
-        {/*            id="password"*/}
-        {/*            {...register("password")}*/}
-        {/*            placeholder="Enter your password"*/}
-        {/*        />*/}
-        {/*        <div style={{ color: "red" }}>{errors.password?.message}</div>*/}
-        {/*    </div>*/}
-        {/*    <div>*/}
-        {/*        <button type="submit" className="btn btn-dark">Login</button>*/}
-        {/*    </div>*/}
-        {/*</form>*/}
-
             <section className="text-center text-lg-start">
                 <div className="container py-4">
                     <div className="row g-0 align-items-center">
@@ -100,7 +73,5 @@ export function LoginForm() {
                 </div>
             </section>
         </div>
-
-
     );
 }

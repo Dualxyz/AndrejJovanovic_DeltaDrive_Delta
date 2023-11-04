@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { registerUser } from "../../Service/AuthService";
+import {ToastContainer, toast} from "react-toastify";
+import React from "react";
 
 const registerSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
@@ -33,84 +35,18 @@ export function RegisterForm() {
         // reset();
         try {
             const response = await registerUser(data);
+            toast.success("Request Accepted");
+
             reset();
         } catch (error) {
             console.error("API Error:", error);
+            toast.error("Request Failed. Email already registered");
         }
     };
 
     return (
-        // <form onSubmit={handleSubmit(handleRegister)}>
-        //     <div>
-        //         <label className="form_label" id="firstName">First name</label>
-        //         <input
-        //             type="text"
-        //             name="firstName"
-        //             id="firstName"
-        //             {...register("firstName")}
-        //             placeholder="Enter your first name"
-        //         />
-        //         <div style={{ color: "red" }}>{errors.firstName?.message}</div>
-        //     </div>
-        //     <div>
-        //         <label className="form_label" id="lastName">Last name</label>
-        //         <input
-        //             type="text"
-        //             name="lastName"
-        //             id="lastName"
-        //             {...register("lastName")}
-        //             placeholder="Enter your last name"
-        //         />
-        //         <div style={{ color: "red" }}>{errors.lastName?.message}</div>
-        //     </div>
-        //     <div>
-        //         <label className="form_label" id="email">Email</label>
-        //         <input
-        //             type="text"
-        //             name="email"
-        //             id="email"
-        //             {...register("email")}
-        //             placeholder="Enter your email address"
-        //         />
-        //         <div style={{ color: "red" }}>{errors.email?.message}</div>
-        //     </div>
-        //     <div>
-        //         <label className="form_label" id="password">Password</label>
-        //         <input
-        //             type="password"
-        //             name="password"
-        //             id="password"
-        //             {...register("password")}
-        //             placeholder="Enter your password"
-        //         />
-        //         <div style={{ color: "red" }}>{errors.password?.message}</div>
-        //     </div>
-        //     <div>
-        //         <label className="form_label" id="birthday">Birthday</label>
-        //         <input
-        //             type="date"
-        //             name="birthday"
-        //             id="birthday"
-        //             {...register("birthday")}
-        //         />
-        //         <div style={{ color: "red" }}>{errors.birthday?.message}</div>
-        //     </div>
-        //     <div>
-        //         <button type="submit" className="btn btn-dark">Register</button>
-        //     </div>
-        // </form>
-
         <section className="text-center text-lg-start">
-            {/*<style>*/}
-            {/*    .cascading-right {*/}
-            {/*    margin-right: -50px;*/}
-            {/*}*/}
-            {/*    @media (max-width: 991.98px) {*/}
-            {/*    .cascading-right {*/}
-            {/*    margin-right: 0;*/}
-            {/*}*/}
-            {/*}*/}
-            {/*</style>*/}
+            <ToastContainer />
             <div className="container py-4">
                 <div className="row g-0 align-items-center">
                     <div className="col-lg-6 mb-5 mb-lg-0">

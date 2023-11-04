@@ -10,7 +10,6 @@ const config = {
 
 export const bookRide = async (data) => {
     const apiUrl = "https://localhost:7231/api/Rides";
-    console.error("ER DATA: " + data);
 
     try{
         const response = await axios.post(apiUrl, data, config);

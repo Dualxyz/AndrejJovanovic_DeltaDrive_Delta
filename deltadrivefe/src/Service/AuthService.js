@@ -18,5 +18,6 @@ export const registerUser = async (data) =>{
         return response.data;
     } catch (error) {
         console.error("API Error:", error);
+        throw error;
     }
 }

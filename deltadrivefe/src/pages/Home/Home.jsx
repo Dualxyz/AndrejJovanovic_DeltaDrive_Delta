@@ -3,18 +3,6 @@ import React, { useState, useEffect } from "react";
 import BookModal from "../../components/BookButton/BookModal";
 import {getPassengerDetails, getNearbyDrivers} from "../../Service/PassengerService";
 
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    p: 4,
-
-};
 const Home = () => {
     const [data, setData] = useState(null);
     // const userId = localStorage.getItem('id');
@@ -25,16 +13,7 @@ const Home = () => {
     const [token, getToken] = useState(null);
 
 
-    //MODAL STATES
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    };
 
     useEffect(() => {
         async function fetchData() {
@@ -87,31 +66,24 @@ const Home = () => {
 
             <button className="btn btn-dark" onClick={handleGetLocation}>Get Location</button>
             {currentLocation && (
-                // <div>
-                //     <p>Your Current Location:</p>
-                //     <p>Latitude: {currentLocation.latitude}</p>
-                //     <p>Longitude: {currentLocation.longitude}</p>
-                //     <button className="btn btn-dark" onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
-                // </div>
                 <div>
-
-                <div style={{display: 'flex', justifyContent: 'center', margin: '0 30%'}}>
-                    <table className="table">
-                        <thead className="thead-dark">
-                        <tr>
-                            <th scope="col">Your Current Location:</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Latitude: <span style={{fontWeight: 800}}>{currentLocation.latitude}</span></td>
-                        </tr>
-                        <tr>
-                            <td>Longitude: <span style={{fontWeight: 800}}>{currentLocation.longitude}</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div style={{display: 'flex', justifyContent: 'center', margin: '0 30%'}}>
+                        <table className="table">
+                            <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">Your Current Location:</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Latitude: <span style={{fontWeight: 800}}>{currentLocation.latitude}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Longitude: <span style={{fontWeight: 800}}>{currentLocation.longitude}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <button className="btn btn-dark" onClick={handleGetNearbyDrivers}>Get Nearby Drivers</button>
                 </div>
             )}
@@ -120,9 +92,9 @@ const Home = () => {
             {nearbyDrivers && (
                 <div>
                     <h2 style={{marginTop: '24px', fontWeight: 800}}>Nearby Drivers</h2>
-                    <table>
+                    <table style={{width: '100%'}}>
                         <thead>
-                        <tr>
+                        <tr style={{height:'40px'}}>
                             {Object.keys(nearbyDrivers[0]).map((key) => (
                                 <th style={{background: '#000', color:'white'}} key={key}>{key}</th>
                             ))}
